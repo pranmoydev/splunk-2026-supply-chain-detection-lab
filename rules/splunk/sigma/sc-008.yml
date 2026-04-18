@@ -1,0 +1,35 @@
+title: SC-008 PowerShell Spawning CMD with Whoami
+id: sc-008-powershell-cmd
+status: experimental
+description: Detects PowerShell spawning cmd.exe with whoami command
+author: Pranmoy
+date: 2026-04-18
+
+logsource:
+  product: windows
+  category: process_creation
+
+detection:
+  selection_parent:
+    ParentImage|endswith: '\powershell.exe'
+
+  selection_child:
+    Image|endswith: '\cmd.exe'
+
+  selection_cmd:
+    CommandLine|contains: 'whoami'
+
+  condition: selection_parent and selection_child and selection_cmd
+
+fields:
+  - ComputerName
+  - User
+  - ParentImage
+  - Image
+  - CommandLine
+
+level: high
+
+tags:
+  - attack.execution
+  - attack.t1059.001

@@ -1,0 +1,9 @@
+index=main sourcetype="WinEventLog:Microsoft-Windows-PowerShell/Operational" EventCode=4104
+| eval score=0
+| eval score=score + if(match(Message,"(?i)eval"),1,0)
+| eval score=score + if(match(Message,"(?i)require"),1,0)
+| eval score=score + if(match(Message,"(?i)process\.env"),1,0)
+| eval score=score + if(match(Message,"(?i)dump"),1,0)
+| where score>=1
+| eval risk_level=case(score>=3,"critical",score=2,"high",score=1,"medium")
+| table _time, ComputerName, User, Message, score, risk_level

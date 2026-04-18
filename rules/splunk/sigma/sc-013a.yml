@@ -1,0 +1,31 @@
+title: SC-013a Suspicious PowerShell Script Block
+id: sc-013a-powershell-risk
+status: experimental
+description: Detect suspicious PowerShell script block activity
+author: Pranmoy
+date: 2026-04-18
+
+logsource:
+  product: windows
+  service: powershell
+
+detection:
+  keywords:
+    Message|contains:
+      - eval
+      - require
+      - process.env
+      - dump
+
+  condition: keywords
+
+fields:
+  - ComputerName
+  - User
+  - Message
+
+level: high
+
+tags:
+  - attack.execution
+  - attack.t1059.001

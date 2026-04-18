@@ -1,0 +1,5 @@
+index=main sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational"
+  (CommandLine="*KAIROS*" OR CommandLine="*daemon*") AND CommandLine="*claude*"
+| eval attack_technique="T1569" | eval rule_id="SC-004a"
+| table _time, ComputerName, User, Image, CommandLine
+

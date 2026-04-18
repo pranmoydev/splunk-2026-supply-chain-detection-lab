@@ -1,0 +1,30 @@
+title: SC-007 Suspicious Node File Creation
+id: sc-007-node-file-creation
+status: experimental
+description: Detects Node.js creating suspicious files
+author: Pranmoy
+date: 2026-04-18
+
+logsource:
+  product: windows
+  category: file_event
+
+detection:
+  selection:
+    Image|contains:
+      - 'node.exe'
+      - 'claude'
+
+  condition: selection
+
+fields:
+  - ComputerName
+  - User
+  - Image
+  - TargetFilename
+
+level: medium
+
+tags:
+  - attack.defense_evasion
+  - attack.t1078

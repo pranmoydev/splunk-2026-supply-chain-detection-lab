@@ -1,0 +1,31 @@
+title: SC-004a Claude Daemon Execution
+id: sc-004a-claude-daemon
+status: experimental
+description: Detects suspicious Claude daemon execution
+author: Pranmoy
+date: 2026-04-18
+
+logsource:
+  product: windows
+  category: process_creation
+
+detection:
+  selection:
+    CommandLine|contains:
+      - KAIROS
+      - daemon
+      - claude
+
+  condition: selection
+
+fields:
+  - ComputerName
+  - User
+  - Image
+  - CommandLine
+
+level: high
+
+tags:
+  - attack.execution
+  - attack.t1569

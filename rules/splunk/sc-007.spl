@@ -1,0 +1,4 @@
+index=main sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=11
+| search (Image="*node.exe*" OR Image="*claude*")
+| eval attack_technique="T1078" | eval rule_id="SC-007"
+| table _time, ComputerName, User, Image, TargetFilename
